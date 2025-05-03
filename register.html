@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Логин и Регистрация</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #login-error, #register-error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    #login-section, #register-section, #dashboard {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Стартовая кнопка -->
+  <div class="container" id="start-section">
+    <h2>Добро пожаловать!</h2>
+    <button onclick="showLogin()">Войти</button>
+  </div>
+
+  <!-- Вход -->
+  <div class="container" id="login-section">
+    <h2>Вход</h2>
+    <input id="login-username" placeholder="Логин">
+    <input id="login-password" type="password" placeholder="Пароль">
+    <button onclick="login()">Войти</button>
+    <p><a href="#" onclick="showRegister()">Нет аккаунта? Зарегистрируйтесь</a></p>
+    <p id="login-error"></p>
+  </div>
+
+  <!-- Регистрация -->
+  <div class="container" id="register-section">
+    <h2>Регистрация</h2>
+    <input id="register-username" placeholder="Новый логин">
+    <input id="register-password" type="password" placeholder="Новый пароль">
+    <button onclick="register()">Зарегистрироваться</button>
+    <p><a href="#" onclick="showLogin()">Уже есть аккаунт? Войти</a></p>
+    <p id="register-error"></p>
+  </div>
+
+  <!-- Личный кабинет -->
+  <div class="container" id="dashboard">
+    <h2>Добро пожаловать, <span id="user-name"></span>!</h2>
+    <p>Вы вошли в личный кабинет.</p>
+    <button onclick="logout()">Выйти</button>
+  </div>
+
+  <script>
+    let users = [
+      { username: "admin", password: "1234" },
+      { username: "user", password: "pass" }
+    ];
+
+    function showLogin() {
+      document.getElementById("start-section").style.display = "none";
+      document.getElementById("register-section").style.display = "none";
+      document.getElementById("login-section").style.display = "block";
+    }
+
+    function showRegister() {
+      document.getElementById("start-section").style.display = "none";
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("register-section").style.display = "block";
+    }
+
+    function login() {
+      const username = document.getElementById("login-username").value;
+      const password = document.getElementById("login-password").value;
+      const error = document.getElementById("login-error");
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        showDashboard(user.username);
+        error.textContent = "";
+      } else {
+        error.textContent = "❌ Неверный логин или пароль.";
+      }
+    }
+
+    function register() {
+      const username = document.getElementById("register-username").value;
+      const password = document.getElementById("register-password").value;
+      const error = document.getElementById("register-error");
+
+      const userExists = users.some(u => u.username === username);
+
+      if (userExists) {
+        error.textContent = "⚠️ Пользователь уже существует.";
+      } else if (username === "" || password === "") {
+        error.textContent = "⚠️ Заполните все поля.";
+      } else {
+        users.push({ username, password });
+        alert("✅ Регистрация успешна! Теперь войдите.");
+        showLogin();
+      }
+    }
+
+    function showDashboard(username) {
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("register-section").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("user-name").textContent = username;
+    }
+
+    function logout() {
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("start-section").style.display = "block";
+    }
+  </script>
+</body>
+</html>

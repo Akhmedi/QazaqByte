@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Вход и Личный Кабинет</title>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 320px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    #login-error {
+      color: red;
+      margin-top: 10px;
+    }
+
+    #dashboard {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="login-section">
+    <h2>Вход</h2>
+    <input id="username" placeholder="Логин">
+    <input id="password" type="password" placeholder="Пароль">
+    <button onclick="login()">Войти</button>
+    <p id="login-error"></p>
+  </div>
+
+  <div class="container" id="dashboard">
+    <h2>Добро пожаловать, <span id="user-name"></span>!</h2>
+    <p>Вы вошли в личный кабинет.</p>
+    <button onclick="logout()">Выйти</button>
+  </div>
+
+  <script>
+    const users = [
+      { username: "admin", password: "1234" },
+      { username: "user", password: "pass" }
+    ];
+
+    function login() {
+      const loginInput = document.getElementById("username").value;
+      const passInput = document.getElementById("password").value;
+      const error = document.getElementById("login-error");
+
+      const user = users.find(u => u.username === loginInput && u.password === passInput);
+
+      if (user) {
+        document.getElementById("login-section").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+        document.getElementById("user-name").textContent = user.username;
+        error.textContent = "";
+      } else {
+        error.textContent = "❌ Неверный логин или пароль.";
+      }
+    }
+
+    function logout() {
+      document.getElementById("login-section").style.display = "block";
+      document.getElementById("dashboard").style.display = "none";
+    }
+  </script>
+</body>
+</html>
+

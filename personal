@@ -1,0 +1,156 @@
+Вот обновлённый HTML-код твоей страницы с личным кабинетом, где данные (логин и время входа) сохраняются через localStorage и автоматически загружаются при обновлении страницы:
+
+✅ Обновления:
+
+* Сохраняется имя пользователя и дата входа
+* При перезагрузке автоматически показывается личный кабинет, если пользователь был авторизован
+* При выходе localStorage очищается
+
+Вот полный код:
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Личный кабинет</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      width: 350px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      background: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    button:hover {
+      background: #45a049;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 20px;
+      border-collapse: collapse;
+    }
+
+    td {
+      padding: 8px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #login-section, #dashboard {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container" id="login-section">
+    <h2>Вход</h2>
+    <input id="username" placeholder="Логин">
+    <input id="password" type="password" placeholder="Пароль">
+    <button onclick="login()">Войти</button>
+    <p id="login-error" style="color:red;"></p>
+  </div>
+
+  <div class="container" id="dashboard">
+    <h2>Личный кабинет</h2>
+    <p>Добро пожаловать, <strong id="user-display"></strong>!</p>
+    <table>
+      <tr><td>Логин:</td><td id="user-username"></td></tr>
+      <tr><td>Дата входа:</td><td id="login-date"></td></tr>
+    </table>
+    <button onclick="logout()">Выйти</button>
+  </div>
+
+  <script>
+    const users = [
+      { username: "admin", password: "1234" },
+      { username: "user", password: "pass" }
+    ];
+
+    function login() {
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const error = document.getElementById("login-error");
+
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        const loginTime = new Date().toLocaleString();
+        localStorage.setItem("loggedInUser", username);
+        localStorage.setItem("loginTime", loginTime);
+        showDashboard(username, loginTime);
+        error.textContent = "";
+      } else {
+        error.textContent = "❌ Неверный логин или пароль.";
+      }
+    }
+
+    function showDashboard(username, loginTime) {
+      document.getElementById("login-section").style.display = "none";
+      document.getElementById("dashboard").style.display = "block";
+      document.getElementById("user-display").textContent = username;
+      document.getElementById("user-username").textContent = username;
+      document.getElementById("login-date").textContent = loginTime;
+    }
+
+    function logout() {
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("loginTime");
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("login-section").style.display = "block";
+    }
+
+    // При загрузке страницы — проверяем, есть ли авторизованный пользователь
+    window.onload = () => {
+      const savedUser = localStorage.getItem("loggedInUser");
+      const savedTime = localStorage.getItem("loginTime");
+
+      if (savedUser && savedTime) {
+        showDashboard(savedUser, savedTime);
+      } else {
+        document.getElementById("login-section").style.display = "block";
+      }
+    };
+  </script>
+</body>
+</html>
+```
+
+Хочешь, чтобы я добавил также регистрацию нового пользователя с сохранением в localStorage?
