@@ -206,9 +206,6 @@ body, html {
     font-size: 22px;
   }
 }
-body {
-    padding-top: 80px; /* Добавим отступ, чтобы контент не оказался под header */
-}
 .cart-button {
     position: fixed;
     bottom: 20px;
