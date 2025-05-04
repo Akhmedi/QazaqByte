@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Личный кабинет</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .info {
+      margin-top: 30px;
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 10px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 22px;
+      }
+
+      input, button {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Личный кабинет</h2>
+
+    <label for="name">Имя</label>
+    <input type="text" id="name" placeholder="Введите имя" />
+
+    <label for="email">Email</label>
+    <input type="email" id="email" placeholder="Введите email" />
+
+    <label for="phone">Телефон</label>
+    <input type="tel" id="phone" placeholder="Введите номер телефона" />
+
+    <button onclick="saveProfile()">Сохранить</button>
+    <a href ="Hakaton.html">
+      <button>Главное меню</button></a>
+
+    <div class="info" id="profileDisplay">
+      Загрузка данных...
+    </div>
+  </div>
+
+  <script>
+    function saveProfile() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const updatedAt = new Date().toLocaleString();
+
+      const userProfile = { name, email, phone, updatedAt };
+      localStorage.setItem("userProfile", JSON.stringify(userProfile));
+
+      showProfile(userProfile);
+    }
+
+    function showProfile(data) {
+      const display = document.getElementById("profileDisplay");
+
+      if (!data.name && !data.email && !data.phone) {
+        display.innerHTML = "Данных ещё нет. Заполните и нажмите «Сохранить».";
+        return;
+      }
+
+      display.innerHTML = `
+        <strong>Имя:</strong> ${data.name || "—"}<br>
+        <strong>Email:</strong> ${data.email || "—"}<br>
+        <strong>Телефон:</strong> ${data.phone || "—"}<br>
+        <em>Последнее обновление:</em> ${data.updatedAt || "—"}
+      `;
+    }
+
+    window.onload = () => {
+      const saved = localStorage.getItem("userProfile");
+      if (saved) {
+        const data = JSON.parse(saved);
+        document.getElementById("name").value = data.name || "";
+        document.getElementById("email").value = data.email || "";
+        document.getElementById("phone").value = data.phone || "";
+        showProfile(data);
+      } else {
+        showProfile({});
+      }
+    };
+  </script>
+</body>
+</html>
