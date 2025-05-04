@@ -93,7 +93,8 @@
   <div class="container" id="dashboard">
     <h2>Добро пожаловать, <span id="user-name"></span>!</h2>
     <p>Вы вошли в личный кабинет.</p>
-    <button onclick="logout()">Выйти</button>
+     <a href ="privat.html">
+      <button>Войти</button></a>
   </div>
 
   <script>
@@ -135,6 +136,7 @@
       const error = document.getElementById("register-error");
 
       const userExists = users.some(u => u.username === username);
+
 
       if (userExists) {
         error.textContent = "⚠️ Пользователь уже существует.";
