@@ -218,7 +218,8 @@ body, html {
 .menu-item > *:last-child { /* Выбирает последний дочерний элемент .menu-item */
     font-size: 20px; /* Попробуйте увеличить размер шрифта */
     padding: 5px 10px; /* Добавьте отступы */
-    background-color: #3aef61;
+    background-color: #030303;
+    color: #aee0e0;
 }
 
 .add-to-cart-btn {
