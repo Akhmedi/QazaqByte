@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Доставка / Самовывоз</title>
+    <link rel="stylesheet" href="online.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tab-container">
+            <button class="tab active" onclick="switchTab('delivery')">Доставка</button>
+            <button class="tab" onclick="switchTab('pickup')">Самовывоз</button>
+        </div>
+
+        <div id="delivery-form" class="form active">
+            <h2>На какой адрес доставить?</h2>
+            <input type="text" placeholder="Адрес доставки" value="Алматы," />
+            <div class="row">
+                <input type="text" placeholder="Квартира" />
+                <input type="text" placeholder="Подъезд" />
+                <input type="text" placeholder="Этаж" />
+            </div>
+            <button href ="index.html" class="submit-btn">Готово</button>
+        </div>
+
+        <div id="pickup-form" class="form">
+            <h2>Выберите пункт самовывоза</h2>
+            <p>Адрес: Манаса 56</p>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.form').forEach(el => el.classList.remove('active'));
+
+            if (tab === 'delivery') {
+                document.querySelector('.tab:nth-child(1)').classList.add('active');
+                document.getElementById('delivery-form').classList.add('active');
+            } else {
+                document.querySelector('.tab:nth-child(2)').classList.add('active');
+                document.getElementById('pickup-form').classList.add('active');
+            }
+        }
+    </script>
+</body>
+</html>
